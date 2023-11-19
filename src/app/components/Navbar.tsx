@@ -9,6 +9,11 @@ import Typography from '@mui/material/Typography';
 import InputBase from '@mui/material/InputBase';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
+import { signIn, signOut, useSession} from "next-auth/react"
+import Avatar from '@mui/material/Avatar';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import { Button } from '@mui/material';
+
 
 const Search = styled('div')(({ theme }) => ({
   position: 'relative',
@@ -53,6 +58,8 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function Navbar() {
+  const { data: session} = useSession();
+
   return (
     <Box sx={{ flexGrow: 1,}}>
       <AppBar position="static" sx={{backgroundColor: 'darkslategray'}}>
@@ -83,8 +90,17 @@ export default function Navbar() {
               inputProps={{ 'aria-label': 'search' }}
             />
           </Search>
+
+          {session ? (
+            // If user is logged in, display profile picture
+            <Avatar alt="User Avatar" src={session.user?.image || ""} sx={{ ml: 2 }} />
+          ) : (
+            // If user is not logged in, display login button
+            <Button onClick={() => signIn()} variant="text" sx={{color: "white", paddingLeft: "10px"}}>Sign In</Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
   );
 }
+
