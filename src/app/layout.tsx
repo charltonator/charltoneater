@@ -1,10 +1,9 @@
-"use client";
 
 import { Oswald } from "next/font/google";
 import "./globals.css";
 import { Box, CssBaseline } from "@mui/material";
 import { getServerSession } from "next-auth";
-import SessionProvider from "./components/SessionProvider";
+import SessionProvider from "./(components)/SessionProvider";
 
 const inter = Oswald({ subsets: ["latin"] });
 
